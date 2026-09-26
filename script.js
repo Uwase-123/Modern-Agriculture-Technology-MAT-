@@ -8,7 +8,7 @@
    NOTE: any key placed in client-side JS is visible to site visitors.
    For production, call Gemini from a small server-side proxy instead
    of exposing a key in the browser. */
-
+const GEMINI_API_KEY = "__GEMINI_API_KEY__";
 const GEMINI_MODELS = ["gemini-3.5-flash-lite", "gemini-3.5-flash-lite"];
 
 /* ---------- Plant + library data (language-neutral IDs) ---------- */
