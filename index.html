@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Modern Agriculture Technology AI — intelligent plant health, care and learning dashboard.">
+<title>Modern Agriculture Technology — Intelligent Plant Health</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="ambient ambient-one"></div>
+<div class="ambient ambient-two"></div>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-leaf">🌿</span><strong><span id="brandName" data-i18n="brandName">Modern Agriculture Technology</span><em>AI</em></strong></div>
+    <nav class="nav" aria-label="Main navigation">
+      <button class="active" onclick="showPage('dashboard',this)">🏠 <span data-i18n="navDashboard">Dashboard</span></button>
+      <button onclick="showPage('plants',this)">🌱 <span data-i18n="navPlants">My Plants</span></button>
+      <button onclick="openScan()">📷 <span data-i18n="navScan">Scan Plant</span></button>
+      <button onclick="showPage('library',this)">📚 <span data-i18n="navLibrary">Plant Library</span></button>
+      <button onclick="showPage('ai',this)">🤖 <span data-i18n="navAI">AI Assistant</span></button>
+      <button onclick="showPage('reminders',this)">🔔 <span data-i18n="navReminders">Reminders</span></button>
+      <button onclick="showPage('analytics',this)">📊 <span data-i18n="navAnalytics">Analytics</span></button>
+      <button onclick="showPage('nutrients',this)">🧪 <span data-i18n="navNutrients">Nutrients</span></button>
+      <button onclick="showPage('settings',this)">⚙️ <span data-i18n="navSettings">Settings</span></button>
+    </nav>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <h1>Good morning, <span id="welcomeName">Plant Lover</span>! 🌤️</h1>
+        <p data-i18n="subtitle">Your personalized plant-care dashboard.</p>
+      </div>
+      <div class="top-status"><span class="status-dot"></span> <span data-i18n="ready">Modern Agriculture Technology is ready</span></div>
+      <div class="top-actions">
+        <button class="mode-toggle" id="mainModeToggle" type="button" onclick="toggleMainTheme()" aria-pressed="false">
+          <span class="mode-icon" aria-hidden="true">🌙</span><span class="mode-label">Dark mode</span>
+        </button>
+        <button class="secondary" onclick="openProfile()">👤 <span data-i18n="myDetails">My details</span></button>
+        <div class="avatar" id="avatar">P</div>
+      </div>
+    </header>
+
+    <section id="dashboard" class="page active">
+      <div class="hero">
+        <div>
+          <span class="eyebrow" data-i18n="heroEyebrow">AI-POWERED PLANT CARE</span>
+          <h2 data-i18n="heroTitle">Understand your plants. Help them grow.</h2>
+          <p data-i18n="heroText">Identify plants, monitor health, learn their sunlight and nutrient needs, and build a personalized care routine.</p>
+          <button class="primary" onclick="openScan()" data-i18n="scan">📷 Scan a Plant</button>
+          <button class="secondary" onclick="openAdd()" data-i18n="add">＋ Add Plant</button>
+        </div>
+        <div class="hero-art">
+          <div class="hero-orbit orbit-a"></div>
+          <div class="hero-orbit orbit-b"></div>
+          <div class="hero-plant">🌿</div>
+          <span class="hero-spark spark-a">✦</span>
+          <span class="hero-spark spark-b">✦</span>
+          <span class="hero-spark spark-c">•</span>
+        </div>
+      </div>
+
+      <div class="grid four">
+        <div class="card metric"><div class="metric-icon">💧</div><div><strong id="waterCount">2</strong><small data-i18n="careChecks">Care checks today</small></div></div>
+        <div class="card metric"><div class="metric-icon">☀️</div><div><strong>6.8h</strong><small data-i18n="lightTracked">Light tracked</small></div></div>
+        <div class="card metric"><div class="metric-icon">🧪</div><div><strong>1</strong><small data-i18n="nutrientWarning">Nutrient warning</small></div></div>
+        <div class="card metric"><div class="metric-icon">🌿</div><div><strong id="overallScore">87</strong><small data-i18n="overallHealth">Overall health</small></div></div>
+      </div>
+
+      <div class="grid two section-gap">
+        <div class="card">
+          <h3 id="carePlanTitle" data-i18n="carePlan">🔔 Today's care plan</h3>
+          <p class="muted" data-i18n="personalized">Personalized tasks based on your plants.</p>
+          <div id="taskList"></div>
+        </div>
+
+        <div class="card smart-care-card">
+          <h3 id="insightTitle" data-i18n="insight">🤖 Modern Agriculture Technology insight</h3>
+          <div class="tip"><b id="insightBold">Your plants are looking great.</b><p class="muted" id="insightBody"></p><button class="secondary" onclick="showPage('ai')" data-i18n="askMAT">Ask Modern Agriculture Technology AI →</button></div>
+          <h3 class="mini-heading" data-i18n="environment">🌦️ Environment</h3>
+          <div class="stat-line"><span data-i18n="temperature">Temperature</span><b>28°C</b></div>
+          <div class="stat-line"><span data-i18n="humidity">Humidity</span><b>63%</b></div>
+          <div class="stat-line"><span data-i18n="conditions">Conditions</span><b>☀️ Bright</b></div>
+        </div>
+      </div>
+
+      <h2 data-i18n="yourPlants">Your plants</h2>
+      <div id="dashboardPlants" class="grid four"></div>
+    </section>
+
+    <section id="plants" class="page">
+      <div class="toolbar">
+        <button class="primary" onclick="openAdd()" data-i18n="add">＋ Add Plant</button>
+        <button class="secondary" onclick="openScan()" data-i18n="scanIdentify">📷 Scan & Identify</button>
+      </div>
+      <div id="plantGrid" class="grid three"></div>
+    </section>
+
+    <section id="library" class="page">
+      <div class="card">
+        <h2 data-i18n="plantLibrary">📚 Plant Library</h2>
+        <p class="muted" data-i18n="explore">Explore light, water, soil, climate, nutrients and common care notes.</p>
+        <input class="library-search" id="librarySearch" data-i18n-placeholder="searchPlaceholder" placeholder="Search 25+ plants..." oninput="renderLibrary()">
+      </div>
+      <div id="libraryGrid" class="plant-list section-gap"></div>
+    </section>
+
+    <section id="reminders" class="page">
+      <div class="card">
+        <h2 data-i18n="remindersTitle">🔔 Smart Reminders</h2>
+        <p class="muted" data-i18n="reminderExplain">Reminders encourage you to check conditions rather than blindly following a fixed watering schedule.</p>
+        <button class="primary" onclick="openAdd()" data-i18n="addReminder">＋ Add plant reminder</button>
+        <table>
+          <thead><tr><th data-i18n="tablePlant">Plant</th><th data-i18n="tableTask">Task</th><th data-i18n="tableTime">Time</th><th data-i18n="tableStatus">Status</th></tr></thead>
+          <tbody id="reminderTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="analytics" class="page">
+      <div class="grid four">
+        <div class="card"><span class="muted" data-i18n="plantsTrackedLabel">Plants tracked</span><div class="kpi" id="plantCount">4</div></div>
+        <div class="card"><span class="muted" data-i18n="tasksCompletedLabel">Tasks completed</span><div class="kpi" id="tasksCompletedPct">78%</div></div>
+        <div class="card"><span class="muted" data-i18n="scansCompletedLabel">Scans completed</span><div class="kpi" id="scansCompletedKpi">0</div></div>
+        <div class="card"><span class="muted" data-i18n="careStreakLabel">Care streak</span><div class="kpi">9 🔥</div></div>
+      </div>
+      <div class="grid two section-gap">
+        <div class="card">
+          <h3 data-i18n="healthTrend">📈 Health trend</h3>
+          <div id="healthTrendChart"></div>
+        </div>
+        <div class="card">
+          <h3 data-i18n="achievements">🏆 Achievements</h3>
+          <div id="achievementsList"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="nutrients" class="page">
+      <div class="card">
+        <h2 data-i18n="nutrientCenter">🧪 Nutrient Center</h2>
+        <p class="muted" data-i18n="nutrientExplain">Learn what nutrients do. A visible symptom alone cannot reliably prove a deficiency, so soil or tissue testing is recommended before treating a suspected deficiency.</p>
+      </div>
+      <div id="nutrientCards" class="grid three section-gap"></div>
+    </section>
+
+    <section id="ai" class="page">
+      <div class="card ai">
+        <h2 data-i18n="aiPageTitle">🤖 Modern Agriculture Technology AI</h2>
+        <p class="muted" data-i18n="aiExplain">Ask about plant care, symptoms, sunlight, watering, soil or nutrients.</p>
+        <div class="chat" id="chat"><div class="msg bot" data-i18n="aiWelcome">🌱 Hi! I'm MAT AI. Ask me about a plant or describe a problem.</div></div>
+        <div class="chat-input">
+          <input id="aiInput" type="text" data-i18n-placeholder="askPlaceholder" placeholder="Ask MAT AI...">
+          <button class="primary" id="sendAI" data-i18n="send">Send</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="settings" class="page">
+      <div class="card">
+        <h2 data-i18n="navSettings">⚙️ Settings</h2>
+        <label data-i18n="displayName">Display name</label>
+        <input id="settingsName" placeholder="Plant Lover">
+        <label data-i18n="defaultReminder">Default reminder time</label>
+        <input type="time" value="17:30">
+        <label for="languageSelect" data-i18n="language">Language</label>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+          <option value="en">English</option>
+          <option value="pt">Português</option>
+          <option value="fr">Français</option>
+          <option value="es">Español</option>
+          <option value="tr">Türkçe</option>
+          <option value="sw">Kiswahili</option>
+          <option value="de">Deutsch</option>
+          <option value="ar">العربية</option>
+        </select>
+        <label for="themeSelect" data-i18n="appearance">Appearance / Theme</label>
+        <select id="themeSelect" onchange="changeTheme(this.value)">
+          <option value="light" data-i18n="lightClassic">Light — Classic</option>
+          <option value="dark" data-i18n="darkForest">Dark — Forest</option>
+          <option value="mint" data-i18n="lightMint">Light — Mint</option>
+          <option value="ocean" data-i18n="lightOcean">Light — Ocean</option>
+          <option value="midnight" data-i18n="darkMidnight">Dark — Midnight</option>
+          <option value="sage" data-i18n="darkSage">Dark — Sage</option>
+        </select>
+        <br><br>
+        <button class="primary" onclick="saveSettings()" data-i18n="save">Save settings</button>
+      </div>
+    </section>
+
+    <footer data-i18n="footerText">Modern Agriculture Technology AI • Semantic HTML • Modular CSS • JavaScript state • Responsive UI</footer>
+  </main>
+</div>
+
+<div class="modal" id="profileModal"><div class="modal-box">
+  <button class="close" onclick="closeModal('profileModal')">×</button>
+  <h2 data-i18n="myProfile">👤 Your MAT profile</h2>
+  <p class="muted" data-i18n="profileHelp">You only need to enter a name or nickname. MAT uses it to personalize your dashboard.</p>
+  <label data-i18n="yourName">Your name</label>
+  <input id="profileName" maxlength="30" data-i18n-placeholder="exampleName" placeholder="e.g. Alex">
+  <br><br>
+  <button class="primary" onclick="saveProfile()" data-i18n="saveName">Save my name</button>
+</div></div>
+
+<div class="modal" id="addModal"><div class="modal-box">
+  <button class="close" onclick="closeModal('addModal')">×</button>
+  <h2 data-i18n="addPlantTitle">🌱 Add a Plant</h2>
+  <p class="muted" data-i18n="addHelp">Keep it simple: enter a plant name, or use Scan Plant to identify it.</p>
+  <label data-i18n="plantName">Plant name</label>
+  <input id="newPlantName" data-i18n-placeholder="plantName" placeholder="e.g. Tomato">
+  <label data-i18n="where">Where is it?</label>
+  <select id="newPlantLocation">
+    <option data-i18n="indoor">Indoor</option>
+    <option data-i18n="outdoor">Outdoor</option>
+    <option data-i18n="balcony">Balcony</option>
+    <option data-i18n="garden">Garden</option>
+    <option data-i18n="greenhouse">Greenhouse</option>
+  </select>
+  <label data-i18n="reminderTime">Reminder time</label>
+  <input id="newPlantTime" type="time" value="17:30">
+  <br><br>
+  <button class="primary" onclick="addPlant()" data-i18n="addToMyPlants">Add to My Plants</button>
+</div></div>
+
+<div class="modal" id="scanModal"><div class="modal-box">
+  <button class="close" onclick="closeModal('scanModal')">×</button>
+  <h2 data-i18n="scannerTitle">📷 Modern Agriculture Technology Plant Scanner</h2>
+  <p class="muted" data-i18n="scannerNote">Upload a clear photo. MAT AI will analyze it and suggest possible care needs.</p>
+  <div class="scan-zone">
+    <div class="scan-icon">📷</div>
+    <b data-i18n="choosePhoto">Choose a plant photo</b>
+    <input type="file" accept="image/*" id="scanFile" onchange="simulateScan(this)">
+    <img id="scanPreview" alt="Selected plant preview">
+  </div>
+  <div id="scanResult" class="scan-result"></div>
+</div></div>
+
+<div class="modal" id="detailsModal"><div class="modal-box">
+  <button class="close" onclick="closeModal('detailsModal')">×</button>
+  <h2 data-i18n="detailsTitle">Plant profile</h2>
+  <h3 id="detailsTitleText" style="margin-top:0"></h3>
+  <div id="detailsBody"></div>
+  <br>
+  <button class="secondary" onclick="closeModal('detailsModal')" data-i18n="close">Close</button>
+</div></div>
+
+<div class="modal" id="confirmModal"><div class="modal-box small">
+  <h2 data-i18n="remove">Remove</h2>
+  <p class="muted" id="confirmBody">Remove this plant?</p>
+  <div class="confirm-actions">
+    <button class="secondary" id="cancelRemoveBtn" data-i18n="cancel">Cancel</button>
+    <button class="danger" id="confirmRemoveBtn" data-i18n="confirm">Remove</button>
+  </div>
+</div></div>
+
+<div class="notification" id="notification" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+<footer class="creator-footer">
+  <p>Created by <strong>Uwase</strong> • Modern Agriculture Technology 🌱</p>
+</footer>
+</body>
+</html>
